@@ -4,8 +4,8 @@ const Appointment = require('./models/Appointment.model');
 const Doctor = require('./models/Doctor.model');
 const User = require('./models/User.model');
 
-mongoose.connect(process.env.MONGO_URI || "mongodb://localhost:27017/chospital").then(async () => {
-    const appts = await Appointment.find().populate('doctor patient').sort({createdAt: -1}).limit(10);
+mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost:27017/chospital").then(async () => {
+    const appts = await Appointment.find().populate('doctor patient').sort({ createdAt: -1 }).limit(10);
     console.log(JSON.stringify(appts.map(a => ({
         id: a._id.toString(),
         patientName: a.patient?.name,
