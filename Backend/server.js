@@ -29,7 +29,7 @@ const app = express();
 
 // Middleware
 app.use(cors({
-  origin: "*",
+  origin: 'https://hospital-patient-management-rust.vercel.app/',
   credentials: true,
 }));
 app.use(express.json());
