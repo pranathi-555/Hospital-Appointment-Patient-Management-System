@@ -14,8 +14,8 @@ const setCookieAndRespond = async (res, user, statusCode = 200) => {
   const token = generateToken(user._id);
   const cookieOptions = {
     httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
-    sameSite: 'lax',
+    secure: true, // Important for cross-origin HTTPS
+    sameSite: 'none', // Needed when frontend and backend are on different domains
     maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days
   };
 
@@ -38,7 +38,7 @@ const setCookieAndRespond = async (res, user, statusCode = 200) => {
 };
 
 const register = async (userData) => {
-  const { name, email, password, role, phone, specialization, bloodGroup, age, weight, height, address, patientProfile } = userData;
+  const { name, email, password, role, phone, specialization, bloodGroup, age, weight, height, address, patientProfile, doctorProfile } = userData;
 
   const existingUser = await User.findOne({ email });
   if (existingUser) throw new AppError("Email already registered", 400);
@@ -49,6 +49,7 @@ const register = async (userData) => {
   const finalWeight = weight || patientProfile?.weight;
   const finalHeight = height || patientProfile?.height;
   const finalAddress = address || patientProfile?.address;
+  const finalSpecialization = specialization || doctorProfile?.specialization;
 
   const user = await User.create({
     name,
@@ -67,7 +68,7 @@ const register = async (userData) => {
   if (role === 'doctor') {
     await Doctor.create({
       user: user._id,
-      specialization: specialization,
+      specialization: finalSpecialization,
     });
   }
 
