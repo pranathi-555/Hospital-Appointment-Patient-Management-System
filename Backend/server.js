@@ -30,21 +30,12 @@ const app = express();
 // =======================
 // ✅ FIX 1: CORS SETUP
 // =======================
-const allowedOrigins = [
-  "http://localhost:5173",
-  "http://localhost:3000",
-  "https://hospital-appointment-patient-management-system-pvqo-6m7yql7gs.vercel.app"
-];
+
 
 app.use(cors({
-  origin: [
-    "http://localhost:5173",
-    "http://localhost:3000",
-    "https://hospital-appointment-patient-management-system-pvqo-6m7yql7gs.vercel.app"
-  ],
+  origin: "*",
   credentials: true
 }));
-
 
 // Middleware
 app.use(express.json());
