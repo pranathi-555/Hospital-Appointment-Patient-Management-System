@@ -10,7 +10,7 @@ const getAllDoctors = async (req, res, next) => {
     //   .populate('user', 'name email phone avatar isActive')
     //   .lean();
 const doctors = await Doctor.find()
-  .populate("user", "name email phone avatar isActive");
+  .populate("user", "name email phone avatar");
     let filtered = doctors;
 
     if (specialization) {
