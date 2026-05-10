@@ -32,11 +32,10 @@ const app = express();
 // =======================
 app.use(cors({
   origin: [
-    "http://localhost:5173",
-    "http://localhost:3000",
-    "https://hospital-patient-management-rust.vercel.app"
+    "https://hospital-appointment-patient-management-system-pvqo-6m7yql7gs.vercel.app",
+    "https://hospital-appointment-patient-manage-three.vercel.app"
   ],
-  credentials: true,
+  credentials: true
 }));
 
 

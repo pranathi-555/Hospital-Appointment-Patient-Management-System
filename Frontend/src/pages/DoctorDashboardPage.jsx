@@ -91,7 +91,7 @@ export default function DoctorDashboardPage() {
     try {
       const today = new Date().toISOString().split("T")[0];
       const res = await api.get(`/api/appointments/doctor?date=${today}`);
-      const raw = res.data.appointments || [];
+      const raw = res.data || [];
       // Rule: sorting strictly by token for the queue
       raw.sort((a, b) => (a.tokenNumber || 0) - (b.tokenNumber || 0));
       setQueue(raw);

@@ -11,7 +11,7 @@ const getAllDoctors = async (req, res, next) => {
     //   .lean();
 const doctors = await Doctor.find()
   .populate("user", "name email phone avatar isActive");
-    let filtered = doctors.filter(d => d.user && d.user.isActive);
+    let filtered = doctors;
 
     if (specialization) {
       filtered = filtered.filter(d => d.specialization.toLowerCase().includes(specialization.toLowerCase()));
