@@ -103,8 +103,9 @@ mongoose.connect(process.env.MONGODB_URI)
     process.exit(1);
   });
 
-  mongoose.connection.once("open", () => {
+ mongoose.connection.once("open", () => {
   console.log("🔥 DB NAME:", mongoose.connection.db.databaseName);
+  console.log("🔥 DB HOST:", mongoose.connection.host);
 });
 
 
