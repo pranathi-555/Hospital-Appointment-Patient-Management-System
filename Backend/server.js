@@ -1,4 +1,3 @@
-
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
@@ -27,22 +26,44 @@ const { errorHandler } = require('./middleware/error.middleware');
 
 const app = express();
 
-// Middleware
+
+// =======================
+// ✅ FIX 1: CORS SETUP
+// =======================
 app.use(cors({
-  origin: 'https://hospital-patient-management-rust.vercel.app',
+  origin: [
+    "http://localhost:5173",
+    "http://localhost:3000",
+    "https://hospital-patient-management-rust.vercel.app"
+  ],
   credentials: true,
 }));
+
+
+// Middleware
 app.use(express.json());
 app.use(cookieParser());
+
 
 // Ensure uploads directories exist
 const uploadsDir = path.join(__dirname, 'uploads');
 const recordsDir = path.join(__dirname, 'uploads/records');
+
 if (!fs.existsSync(uploadsDir)) fs.mkdirSync(uploadsDir, { recursive: true });
 if (!fs.existsSync(recordsDir)) fs.mkdirSync(recordsDir, { recursive: true });
 
+
 // Serve uploads statically
 app.use("/uploads", express.static(path.join(process.cwd(), "uploads")));
+
+
+// =======================
+// ✅ FIX 2: ROOT ROUTE
+// =======================
+app.get("/", (req, res) => {
+  res.send("🏥 Hospital Management API is Running");
+});
+
 
 // Register routes
 app.use('/api/auth', authRoutes);
@@ -60,11 +81,16 @@ app.use('/api/feedback', feedbackRoutes);
 app.use('/api/questions', questionRoutes);
 app.use('/api/feed', feedRoutes);
 
+
 // Health check
-app.get('/api/health', (req, res) => res.json({ status: 'OK', message: 'HealthSync API running' }));
+app.get('/api/health', (req, res) =>
+  res.json({ status: 'OK', message: 'HealthSync API running' })
+);
+
 
 // Global Error handler
 app.use(errorHandler);
+
 
 const PORT = process.env.PORT || 5001;
 
@@ -77,5 +103,6 @@ mongoose.connect(process.env.MONGODB_URI)
     console.error('❌ MongoDB connection failed:', err.message);
     process.exit(1);
   });
+
 
 module.exports = app;
