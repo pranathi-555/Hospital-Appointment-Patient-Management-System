@@ -63,7 +63,7 @@ export function AppProvider({ children }) {
         (isLoggedIn && isPatient) ? api.get("/api/prescriptions/my") : Promise.resolve({ data: { prescriptions: [] } }),
       ]);
 
-      setDoctors(docsRes.data.doctors || []);
+     setDoctors(res.data.doctors || []);
       setMyRecords(recordsRes.data.records || []);
       setMyReports(reportsRes.data || []);
       setMyPrescriptions(prescRes.data.prescriptions || []);
