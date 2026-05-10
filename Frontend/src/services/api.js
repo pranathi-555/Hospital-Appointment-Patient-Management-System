@@ -2,7 +2,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "https://hospitalpatientmanagement-1.onrender.com",
+  baseURL: "https://hospital-appointment-patient-management.onrender.com",
   withCredentials: true,
 });
 
